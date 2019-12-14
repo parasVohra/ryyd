@@ -1056,22 +1056,26 @@
         this.$v.$touch()
 
         var data = {
-          firstName: this.firstName,
-          lastName:this.lastName,
-          email: this.email,
-          phone:this.phone,
-
+          formData:{
+            firstName: this.firstName,
+            lastName:this.lastName,
+            email: this.email,
+            phone:this.phone,
+          }
         }
 
         const config = {
           header:{
-            Accept:"application/json"
+            "Accept":"application/json",
+            "ontent-tyepe":  "application/json"
           }
         };
 
-        axios.post('/signUp',data)
+        
+
+        axios.post('/api/data', data ,config)
         .then(function (res){
-          console.log(res.config.data);
+          console.log(res);
         })
         .catch(function(error){
           console.log(error);

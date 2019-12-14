@@ -42,7 +42,8 @@ module.exports = {
   */
   modules: [
     '@nuxtjs/axios',
-    'nuxt-material-design-icons'
+    'nuxt-material-design-icons',
+    '@nuxtjs/auth'
   ],
   /*
   ** vuetify module configuration
@@ -72,7 +73,13 @@ module.exports = {
     /*
     ** You can extend webpack config here
     */
+   
+
     extend (config, ctx) {
     }
-  }
+  },
+
+  serverMiddleware: ["~/api/index"],
+
+  
 }

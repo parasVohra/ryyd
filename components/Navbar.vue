@@ -9,10 +9,24 @@
         <span class="orange--text">Ryyd</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn text color="grey--text">
-        <span>Sign Out</span>
-        <v-icon right>exit_to_app</v-icon>
+
+      <div v-if="$auth.loggedIn">
+        <v-btn text color="grey--text">
+          {{$auth.user.email}}
+          <span>Sign Out</span>
+          <v-icon right>exit_to_app</v-icon>
       </v-btn>
+      </div>
+      <div v-else>
+        <v-btn text color="grey--text">
+          <span>Sign In</span>
+        </v-btn>
+         <v-btn text color="grey--text">
+          <span>Register</span>
+        </v-btn>
+
+      </div>
+      
     </v-toolbar>
 
     <v-navigation-drawer temporary app v-model="drawer" dark class="blue-grey darken-2">
