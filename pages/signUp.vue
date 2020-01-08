@@ -1,4 +1,5 @@
 <template>
+<div>
 <v-container class="mx-auto" grid-list-xs>
   <v-card-title primary-title>
     SignUp
@@ -19,21 +20,27 @@
     <v-text-field @input="$v.phone.$touch()" @blur="$v.phone.$touch()" v-model="phone" required
       :error-messages="phoneErrors" label="Phone Number" type="number"></v-text-field>
 
+    <v-text-field v-model="password" :error-messages="passwordErrors" label="Password" required
+      @input="$v.password.$touch()" @blur="$v.password.$touch()"></v-text-field>
+
     <v-checkbox v-model="checkbox" :error-messages="checkboxErrors" label="Do you agree?" required
       @change="$v.checkbox.$touch()" @blur="$v.checkbox.$touch()"></v-checkbox>
+
+
 
 
     <v-btn class="mr-4" @click="submit">submit</v-btn>
     <v-btn @click="clear">clear</v-btn>
   </form>
 </v-container>
-  
+</div>
 </template>
 
 <script>
   import { validationMixin } from 'vuelidate'
-  import { required, maxLength, email } from 'vuelidate/lib/validators'
+  import { required, maxLength, minLength, email } from 'vuelidate/lib/validators'
   import axios from "axios";
+
   
 
   export default {
@@ -44,6 +51,7 @@
       lastName: { required, maxLength: maxLength(30) },
       email: { required, email },
       phone: { required, maxLength: maxLength(10)},
+      password:{required, minLength: minLength(8)},
       checkbox: {
         checked (val) {
           return val
@@ -58,6 +66,8 @@
       phone:'',
       select: null,
       checkbox: false,
+      submitStatus: null,
+      password: '',
       selected:{ code: '+1', name: 'Canada' },
       codes: 
       [{
@@ -1048,38 +1058,55 @@
           !this.$v.phone.required && errors.push('Phone Number is required')
           return errors
         
+      },
+      passwordErrors () {
+          const errors = []
+          if (!this.$v.password.$dirty) return errors
+          !this.$v.password.minLength && errors.push('Password must be at least 8 characters long')
+          !this.$v.password.required && errors.push('password is required')
+          return errors
+        
       }
     },
 
     methods: {
-      submit () {
+      submit() {
         this.$v.$touch()
+        console.log('submit!')
+        this.$v.$touch()
+        if (this.$v.$invalid) {
+          this.submitStatus = 'ERROR'
+          console.log("error");
+        } else {
+          // do your submit logic here
+          this.submitStatus = 'PENDING'
+          console.log("submitted");
 
-        var data = {
-          formData:{
-            firstName: this.firstName,
-            lastName:this.lastName,
-            email: this.email,
-            phone:this.phone,
+          var data = {
+            formData: {
+              firstName: this.firstName,
+              lastName: this.lastName,
+              email: this.email,
+              phone: this.selected.code + this.phone,
+              password: this.password
+            }
           }
+
+          const config = {
+            header: {
+              "Accept": "application/json",
+              "ontent-tyepe": "application/json"
+            }
+          };
+          axios.post('/api/signUp', data, config)
+            .then(function (res) {
+              console.log(res);
+            })
+            .catch(function (err) {
+              console.log(err);
+            })
+
         }
-
-        const config = {
-          header:{
-            "Accept":"application/json",
-            "ontent-tyepe":  "application/json"
-          }
-        };
-
-        
-
-        axios.post('/api/data', data ,config)
-        .then(function (res){
-          console.log(res);
-        })
-        .catch(function(error){
-          console.log(error);
-        })
 
 
       },

@@ -1,9 +1,9 @@
 <template>
   <nav>
     <v-toolbar class="elevation-0">
-      <v-toolbar-side-icon class="mx-3">
-        <v-icon large @click="drawer = !drawer">menu</v-icon>
-      </v-toolbar-side-icon>
+    
+      <v-icon large @click="drawer = !drawer" class="mx-3">menu</v-icon>
+     
       <v-toolbar-title class="text-uppercase">
         <span class="font-weight-light">share</span>
         <span class="orange--text">Ryyd</span>

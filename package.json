@@ -1,12 +1,13 @@
 {
-  "name": "Ryyd",
+  "name": "ryyd",
   "version": "1.0.0",
   "description": "Car pool web application",
   "author": "Pursharth",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
+    "dev": " cross-env NODE_ENV=development node server/index.js --watch ",
     "build": "nuxt build",
+  
     "start": "cross-env NODE_ENV=production node server/index.js",
     "generate": "nuxt generate"
   },
