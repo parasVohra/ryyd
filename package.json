@@ -20,7 +20,7 @@
     "express": "^4.16.4",
     "express-session": "^1.17.0",
     "mongoose": "^5.8.0",
-    "node-sass": "^4.13.0",
+    "node-sass": "^4.13.1",
     "nuxt": "^2.0.0",
     "nuxt-material-design-icons": "^1.0.4",
     "passport": "^0.4.1",
